@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/vite.svg">
+  <link rel="stylesheet" type="text/css" href="styles/orb.scss">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script type="module" src="src/orb.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vite App</title>
+</head>
+<body>
+
+<div class="flex flex-col h-screen justify-center">
+  <div class="flex flex-row wrap" id="wrap"></div>
+  <div class="flex flex-row items-center justify-center"> <!-- Ajuste a margem superior aqui -->
+    <h1 class="text-5xl font-extrabold text-white">Dump It</h1> <!-- Título "Dump It" com estilo Tailwind -->
+  </div>
+  <div class="flex flex-row items-center justify-center min-h-screen">
+    <button style="height: 200px; width: 500px;" class=" rounded-xl hover:bg-blue-800 py-4 px-8 text-white ring-1 text-5xl mb-20">
+      Criar repositório +
+    </button>
+  </div>
+</div>
+
+</body>
+</html>
