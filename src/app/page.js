@@ -8,7 +8,7 @@ export default function Home() {
               <label htmlFor="repoNumber" className="block text-sm font-medium text-gray-700">Número do Repositório:</label>
               <input type="text" id="repoNumber" name="repoNumber" className="mt-1 p-2 border border-gray-300 rounded-md w-full" />
               
-              <button type="submit" className="mt-4 w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600">Acessar Repositório</button>
+              <button type="button" className="mt-4 w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600">Acessar Repositório</button>
           </form>
           
           <p className="text-center">ou</p>
