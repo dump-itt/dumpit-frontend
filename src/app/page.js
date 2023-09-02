@@ -4,16 +4,20 @@ import api from "@/services/api";
 import { useRouter } from 'next/navigation';
 import Alert from "@/components/Alert";
 import isValidResponse from "@/services/validateResponse";
-import baseURL from "@/services/baseUrl";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 export default function Home() {
   const [showAlert, setShowAlert] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { push } = useRouter();
 
   function handleRepositoryCreation(e) {
     e.preventDefault();
+    setLoading(true);
 
     api.post("/repositories", {}).then((response) => {
+      setLoading(false);
+
       if (isValidResponse(response)) {
         push(`/repo?id=${response.data.id}`);
       } else {
@@ -24,6 +28,7 @@ export default function Home() {
 
   return (
     <main className="bg-gray-100 flex justify-center items-center h-screen">
+      {loading && <LoadingSpinner />}
       <Alert showAlert={showAlert} setShowAlert={setShowAlert} type="error" message="Ops, algo deu errado! " />
       <div className="w-full sm:w-1/2 md:w-1/3 bg-white p-8 rounded-lg shadow-md">
           <h1 className="text-2xl font-semibold mb-4 text-center fun-font text-gray-900">Dump.it</h1>

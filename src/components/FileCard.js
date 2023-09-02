@@ -10,15 +10,19 @@ const FileCard = ({ title, icon, id, updateParent }) => {
     function handleFileDeletion(e) {
       e.preventDefault();
 
-      api.delete(`/files/${id}`).then((response) => {
-        if (isValidResponse(response)) {
-          updateParent();
-        }
-      })
+      const confirmation = confirm("Deseja deletar o arquivo?");
+
+      if (confirmation) {
+        api.delete(`/files/${id}`).then((response) => {
+          if (isValidResponse(response)) {
+            updateParent();
+          }
+        });
+      }
     }
 
     return (
-        <div className="bg-white p-4 rounded-lg shadow-md flex items-center space-x-4">
+        <div className="m-2 bg-white p-4 rounded-lg shadow-md flex items-center space-x-4">
             <div className="w-10 h-10 text-black text-2xl flex items-center justify-center">
               <FontAwesomeIcon icon={icon} />
             </div>
@@ -29,7 +33,7 @@ const FileCard = ({ title, icon, id, updateParent }) => {
                 <a href={baseURL + "/files/" + id} download className="text-blue-400 hover:text-blue-600" title="Baixar">
                   <FontAwesomeIcon icon={faDownload} />
                 </a>
-                <a onClick={handleFileDeletion} className="text-red-400 hover:text-red-600" title="Deletar">
+                <a href='#' onClick={handleFileDeletion} className="text-red-400 hover:text-red-600" title="Deletar">
                   <FontAwesomeIcon icon={faTrash} />
                 </a>
             </div>
