@@ -57,7 +57,38 @@ export default function Repo() {
         setShowAlert(true);
       }
     });
-  } 
+  }
+
+  function handleSaveText() {
+    const newText = document.querySelector('#newText').value.trim();
+
+    if (newText === "") {
+      // O campo de texto está vazio, não há nada para salvar
+      return;
+    }
+
+    const blob = new Blob([newText], { type: 'text/plain' });
+    const file = new File([blob], 'text.txt', { type: 'text/plain' });
+
+    const formData = new FormData();
+    formData.append("file", file);
+    console.log(formData)
+    console.log("Texto: ", newText)
+
+    api.post(`/repositories/${repoID}/add`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+        .then(function (response) {
+          if (isValidResponse(response)) {
+            getRepositoryContent();
+            document.querySelector('#newText').value = "";
+          } else {
+            setShowAlert(true);
+          }
+        });
+  }
 
   return (
     <main className="bg-gray-100 flex flex-col items-center h-screen p-4">
@@ -69,9 +100,21 @@ export default function Repo() {
 
           <form className="flex ml-8 basis-1/2 items-center space-x-4 w-full md:w-auto">
               <input type="file" id="newFile" name="newFile" className="p-2 border border-gray-300 rounded-md w-full" />
-              
+
               <button onClick={handleFileUpload} type="button" className="w-full ml-4 bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600">Adicionar Arquivo</button>
           </form>
+      </div>
+      <div className="mt-4 flex flex-col lg:flex-row lg:flex-wrap lg:w-full">
+        <label htmlFor="newText" className="block text-xl font-bold text-gray-700">Adicionar Texto</label>
+        <textarea
+            id="newText"
+            name="newText"
+            className="mt-1 p-2 border border-gray-300 rounded-md w-full h-24 text-black"
+            placeholder="Digite seu texto aqui..."
+        ></textarea>
+        <button onClick={handleSaveText} className="mt-4 bg-green-500 text-white text-xl font-bold p-2 rounded-md hover:bg-green-600">
+          <span className="mr-2">+</span> Salvar Texto
+        </button>
       </div>
       <div className="mt-4 flex flex-col lg:flex-row lg:flex-wrap lg:w-full">
         {
