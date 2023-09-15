@@ -72,8 +72,6 @@ export default function Repo() {
 
     const formData = new FormData();
     formData.append("file", file);
-    console.log(formData)
-    console.log("Texto: ", newText)
 
     api.post(`/repositories/${repoID}/add`, formData, {
       headers: {
@@ -90,18 +88,47 @@ export default function Repo() {
         });
   }
 
+  function handleSetEditPassword() {
+    const editPassword = document.querySelector('#editPassword').value;
+
+    console.log(editPassword)
+    document.querySelector('#editPassword').value = '';
+
+    /*
+    TODO: ADICIONAR ENDOPOINT PARA SALVAR SENHA DE EDIÇÃO
+    api.post(`/`, { editPassword }, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+        .then(function (response) {
+          if (isValidResponse(response)) {
+            TODO: Travar botões de edição
+
+          } else {
+            setShowAlert(true);
+          }
+        });*/
+  }
+
   return (
     <main className="bg-gray-100 flex flex-col items-center h-screen p-4">
       <Alert showAlert={showAlert} setShowAlert={setShowAlert} type="error" message="Ops, algo deu errado! " />
-      <div className="w-full h-48 md:h-28 bg-white p-8 rounded-lg shadow-md flex items-center mb-4 flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
+      <div className="w-full h-48 md:h-28 bg-white p-8 rounded-lg shadow-md flex items-center mb-4 flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-15">
           <a href='/' className="text-2xl font-semibold fun-font basis-1/4 text-gray-900">Dump.it</a>
-          
+
           <h1 className="text-2xl font-semibold fun-font basis-1/4 text-gray-900">#{repoID}</h1>
 
-          <form className="flex ml-8 basis-1/2 items-center space-x-4 w-full md:w-auto">
-              <input type="file" id="newFile" name="newFile" className="p-2 border border-gray-300 rounded-md w-full" />
+          <form className="flex basis-1/2 items-center space-x-4 w-full md:w-auto">
+            <label htmlFor="editPassword" className="block text-large font-semibold text-gray-700">Senha para Proteger a Edição:</label>
+            <div className="flex">
+              <input type="password" id="editPassword" name="editPassword" className="mt-1 p-2 border border-gray-300 rounded-md w-full text-black" />
+              <button type="button" onClick={handleSetEditPassword} className="ml-2 bg-blue-500 text-white p-1 font-semibold rounded-md hover:bg-blue-600">Definir Senha</button>
+            </div>
 
-              <button onClick={handleFileUpload} type="button" className="w-full ml-4 bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600">Adicionar Arquivo</button>
+            <input type="file" id="newFile" name="newFile" className="p-3.5 border border-gray-300 rounded-md" />
+
+            <button onClick={handleFileUpload} type="button" className="bg-blue-500 font-semibold text-white p-3.5 rounded-md hover:bg-blue-600">Adicionar Arquivo</button>
           </form>
       </div>
       <div className="mt-4 flex flex-col lg:flex-row lg:flex-wrap lg:w-full">
@@ -112,7 +139,7 @@ export default function Repo() {
             className="mt-1 p-2 border border-gray-300 rounded-md w-full h-24 text-black"
             placeholder="Digite seu texto aqui..."
         ></textarea>
-        <button onClick={handleSaveText} className="mt-4 bg-green-500 text-white text-xl font-bold p-2 rounded-md hover:bg-green-600">
+        <button onClick={handleSaveText} className="mt-4 bg-green-500 text-white text-xl font-semibold p-2 rounded-md hover:bg-green-600">
           <span className="mr-2">+</span> Salvar Texto
         </button>
       </div>
@@ -120,7 +147,7 @@ export default function Repo() {
         {
           files.map((file) => {
             let icon = faFileText;
-            
+
             if (file.mimetype.includes("audio")) {
               icon = faFileAudio;
             } else if (file.mimetype.includes("video")) {
