@@ -6,10 +6,12 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import api from '@/services/api';
 import isValidResponse from '@/services/validateResponse';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 export default function Repo() {
   const { push } = useRouter();
   const [showAlert, setShowAlert] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [files, setFiles] = useState([]);
   const searchParams = useSearchParams();
   const repoID = searchParams.get("id");
@@ -38,6 +40,7 @@ export default function Repo() {
   }
 
   function handleFileUpload() {
+    setLoading(true);
     let formData = new FormData();
     let newFile = document.querySelector('#newFile');
     formData.append("file", newFile.files[0]);
@@ -49,6 +52,7 @@ export default function Repo() {
       }
     })
     .then(function (response) {
+      setLoading(false);
       if (isValidResponse(response)) {
         getRepositoryContent();
         const emptyFile = document.createElement('input');
@@ -113,6 +117,7 @@ export default function Repo() {
 
   return (
     <main className="bg-gray-100 flex flex-col items-center h-screen p-4">
+      {loading && <LoadingSpinner />}
       <Alert showAlert={showAlert} setShowAlert={setShowAlert} type="error" message="Ops, algo deu errado! " />
       <div className="w-full h-48 md:h-28 bg-white p-8 rounded-lg shadow-md flex items-center mb-4 flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-15">
           <a href='/' className="text-2xl font-semibold fun-font basis-1/4 text-gray-900">Dump.it</a>
