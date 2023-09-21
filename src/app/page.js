@@ -29,14 +29,15 @@ export default function Home() {
       }
     });
   }
+
   function handleAddPasswordChange() {
         const addPasswordCheckbox = document.querySelector('#addPassword');
         const passwordInput = document.querySelector('#password');
 
         if (addPasswordCheckbox.checked) {
-            passwordInput.removeAttribute('disabled');
+            passwordInput.style = 'display: block;';
         } else {
-            passwordInput.setAttribute('disabled', 'true');
+            passwordInput.style = 'display: none;';
         }
   }
 
@@ -56,9 +57,8 @@ export default function Home() {
           <p className="text-center text-gray-900">ou</p>
 
           <a onClick={handleRepositoryCreation} href="#" className="block mt-2 w-full text-center text-blue-500 hover:underline">Criar Novo Repositório</a>
+          <input type="password" id="password" placeholder={"Senha"} name="password" className="mt-1 p-2 border border-gray-300 rounded-md w-full text-black hidden"/>
           <label htmlFor="addPassword" className="block text-sm font-medium text-gray-700">Habilitar senha no repositório <input type="checkbox" id="addPassword" name="addPassword" className="mt-1" onChange={handleAddPasswordChange} /></label>
-
-          <input type="password" id="password" placeholder={"Senha"} name="password" className="mt-1 p-2 border border-gray-300 rounded-md w-full text-black" disabled/>
       </div>
     </main>
   )
