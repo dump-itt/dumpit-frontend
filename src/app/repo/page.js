@@ -13,9 +13,9 @@ export default function Repo() {
   const [firstLoad, setFirstLoad] = useState(true);
   const [showAlert, setShowAlert] = useState(false);
   const [logged, setLogged] = useState(true);
-  const [editable, setEditable] = useState(true);
+  const [editable, setEditable] = useState(false);
   const [loggedToEdit, setLoggedToEdit] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [files, setFiles] = useState([]);
   const searchParams = useSearchParams();
   const repoID = searchParams.get("id");
@@ -27,7 +27,6 @@ export default function Repo() {
 
     if (firstLoad) {
       getRepositoryContent();
-      setFirstLoad(false);
     }
     
     const interval = setInterval(() => {
@@ -52,9 +51,19 @@ export default function Repo() {
       } else {
         setShowAlert(true);
       }
+
+      if (firstLoad) {
+        setLoading(false);
+        setFirstLoad(false);
+      }
     }).catch((e) => {
       if (e.response.status === 401) {
         setLogged(false);
+      }
+
+      if (firstLoad) {
+        setLoading(false)
+        setFirstLoad(false);
       }
     });
   }
@@ -184,7 +193,7 @@ export default function Repo() {
                 </form>
             </div>
             {editable ? 
-              <div className="mt-4 flex flex-col lg:flex-row lg:flex-wrap w-full">
+              <div className="mt-4 lg:p-2 lg:p-2 flex flex-col lg:flex-row lg:flex-wrap w-full">
                 <label htmlFor="newText" className="block text-xl font-bold text-gray-700">Adicionar Texto</label>
                 <textarea
                     id="newText"
@@ -192,8 +201,8 @@ export default function Repo() {
                     className="mt-1 p-2 border border-gray-300 rounded-md w-full h-24 text-black"
                     placeholder="Digite seu texto aqui..."
                 ></textarea>
-                <button onClick={handleSaveText} className="mt-4 bg-green-500 text-white text-xl font-semibold p-2 rounded-md hover:bg-green-600">
-                  <span className="mr-2">+</span> Salvar Texto
+                <button onClick={handleSaveText} className="mt-4 bg-green-500 text-white font-semibold p-3.5 rounded-md hover:bg-green-600">
+                  Salvar Texto
                 </button>
               </div>
               :
@@ -212,7 +221,7 @@ export default function Repo() {
                     icon = faFileImage
                   }
 
-                  return (<FileCard editable={editable} key={file.id} icon={icon} id={file.id} title={file.name} updateParent={getRepositoryContent} />);
+                  return (<FileCard editable={editable} key={file.id} id={file.id} icon={icon} title={file.name} updateParent={getRepositoryContent} />);
                 })
               }
             </div>

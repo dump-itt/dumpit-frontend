@@ -25,11 +25,10 @@ export default function Home() {
     
 
     api.post("/repositories", {accessPassword, editPassword}).then((response) => {
-      setLoading(false);
-
       if (isValidResponse(response)) {
         push(`/repo?id=${response.data.id}`);
       } else {
+        setLoading(false);
         setShowAlert(true);
       }
     });
