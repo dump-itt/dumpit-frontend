@@ -171,15 +171,15 @@ export default function Repo() {
       {
         logged ?
           <>
-            <div className="w-full h-56 md:h-28 bg-white p-8 rounded-lg shadow-md flex items-center mb-4 flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-15">
+            <div className="w-full h-62 md:h-28 bg-white p-8 rounded-lg shadow-md flex items-center mb-4 flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-15">
                 <a href='/' className="text-2xl font-semibold fun-font basis-1/4 text-gray-900">Dump.it</a>
 
                 <h1 className="text-2xl font-semibold fun-font basis-1/4 text-gray-900">#{repoID}</h1>
-                <form className="flex basis-1/2 items-center space-x-4 w-full md:w-auto">
+                <form className="flex flex-col lg:flex-row basis-1/2 items-center space-x-4 w-full md:w-auto">
                 {editable ? 
                   <>
                     <input type="file" id="newFile" name="newFile" className="p-3.5 border border-gray-300 rounded-md" />
-                    <button onClick={handleFileUpload} type="button" className="bg-blue-500 font-semibold text-white p-3.5 rounded-md hover:bg-blue-600">Adicionar Arquivo</button>
+                    <button onClick={handleFileUpload} type="button" className="mt-4 lg:mt-0 bg-blue-500 font-semibold text-white p-3.5 rounded-md hover:bg-blue-600">Adicionar Arquivo</button>
                   </>
                   :
                   <>
