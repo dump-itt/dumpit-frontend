@@ -178,7 +178,7 @@ export default function Repo() {
                 <form className="flex flex-col lg:flex-row basis-1/2 items-center space-x-4 w-full md:w-auto">
                 {editable ? 
                   <>
-                    <input type="file" id="newFile" name="newFile" className="p-3.5 border border-gray-300 rounded-md" />
+                    <input type="file" id="newFile" name="newFile" className="p-3.5 border border-gray-300 w-full rounded-md" />
                     <button onClick={handleFileUpload} type="button" className="mt-4 lg:mt-0 bg-blue-500 font-semibold text-white p-3.5 rounded-md hover:bg-blue-600">Adicionar Arquivo</button>
                   </>
                   :
