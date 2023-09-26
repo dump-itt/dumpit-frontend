@@ -17,9 +17,14 @@ export default function Home() {
 
     const addPasswordCheckbox = document.querySelector('#addPassword');
     const shouldAddPassword = addPasswordCheckbox.checked;
-    const password = shouldAddPassword ? document.querySelector('#password').value : null;
+    const accessPassword = shouldAddPassword ? document.querySelector('#password').value : null;
 
-    api.post("/repositories", {password}).then((response) => {
+    const addEditPasswordCheckbox = document.querySelector('#addEditPassword');
+    const shouldAddEditPassword = addEditPasswordCheckbox.checked;
+    const editPassword = shouldAddEditPassword ? document.querySelector('#editPassword').value : null;
+    
+
+    api.post("/repositories", {accessPassword, editPassword}).then((response) => {
       setLoading(false);
 
       if (isValidResponse(response)) {
@@ -30,9 +35,9 @@ export default function Home() {
     });
   }
 
-  function handleAddPasswordChange() {
-        const addPasswordCheckbox = document.querySelector('#addPassword');
-        const passwordInput = document.querySelector('#password');
+  function handleAddPasswordChange(isEditPassword) {
+        const addPasswordCheckbox = document.querySelector(isEditPassword ? '#addEditPassword' : '#addPassword');
+        const passwordInput = document.querySelector(isEditPassword ? '#editPassword' : '#password');
 
         if (addPasswordCheckbox.checked) {
             passwordInput.style = 'display: block;';
@@ -57,8 +62,17 @@ export default function Home() {
           <p className="text-center text-gray-900">ou</p>
 
           <a onClick={handleRepositoryCreation} href="#" className="block mt-2 w-full text-center text-blue-500 hover:underline">Criar Novo Repositório</a>
-          <input type="password" id="password" placeholder={"Senha"} name="password" className="mt-1 p-2 border border-gray-300 rounded-md w-full text-black hidden"/>
-          <label htmlFor="addPassword" className="block text-sm font-medium text-gray-700">Habilitar senha no repositório <input type="checkbox" id="addPassword" name="addPassword" className="mt-1" onChange={handleAddPasswordChange} /></label>
+          <label htmlFor="addPassword" className="flex items-center justify-center text-sm font-medium text-gray-700 mt-2">
+            <input type="checkbox" id="addPassword" name="addPassword" className="mr-2" onChange={() => handleAddPasswordChange(false)} />
+            Habilitar senha de acesso no repositório 
+          </label>
+          <input type="password" id="password" placeholder={"Senha de Acesso"} name="password" className="mt-1 p-2 border border-gray-300 rounded-md w-full text-black hidden"/>
+
+          <label htmlFor="addEditPassword" className="flex items-center justify-center text-sm font-medium text-gray-700 mt-2">
+            <input type="checkbox" id="addEditPassword" name="addEditPassword" className="mr-2" onChange={() => handleAddPasswordChange(true)} />
+            Habilitar senha para edição no repositório 
+          </label>
+          <input type="password" id="editPassword" placeholder={"Senha de Edição"} name="editPassword" className="mt-1 p-2 border border-gray-300 rounded-md w-full text-black hidden"/>
       </div>
     </main>
   )
