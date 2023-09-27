@@ -69,9 +69,16 @@ export default function Repo() {
   }
 
   function handleFileUpload() {
-    setLoading(true);
     let formData = new FormData();
     let newFileInput = document.querySelector('#newFile');
+    
+    if(newFileInput.value == '') {
+      alert('Arquivo vazio');
+      return;
+    }
+    
+    setLoading(true);
+    
     formData.append("file", newFileInput.files[0]);
     
     api.post(`/repositories/${repoID}/add`, formData, {
