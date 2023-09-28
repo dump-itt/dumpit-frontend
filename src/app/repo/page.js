@@ -172,7 +172,7 @@ export default function Repo() {
   }
 
   return (
-    <main className="bg-gray-100 flex flex-col items-center h-screen p-4">
+    <main className="bg-gray-100 flex flex-col items-center h-full lg:h-screen p-4">
       <Alert showAlert={showAlert} setShowAlert={setShowAlert} type="error" message="Ops, algo deu errado! " />
       {loading && <LoadingSpinner />}
       {
