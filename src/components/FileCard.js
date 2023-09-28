@@ -6,7 +6,7 @@ import isValidResponse from '@/services/validateResponse';
 import api from '@/services/api';
 import tinify from '@/services/tinify';
 
-const FileCard = ({ editable, title, id, icon, updateParent }) => {
+const FileCard = ({ editable, title, id, icon, updateParent, setLoading }) => {
 
     function handleFileDeletion(e) {
       e.preventDefault();
@@ -24,7 +24,7 @@ const FileCard = ({ editable, title, id, icon, updateParent }) => {
 
     function minifyPNGorJPEG(e) {
       e.preventDefault();
-
+      setLoading(true);
       api.post("/images/compress", {
         url: baseURL + "/files/" + title
       }).then(response => {
@@ -34,7 +34,7 @@ const FileCard = ({ editable, title, id, icon, updateParent }) => {
         downloadLink.setAttribute('download', title);
         downloadLink.href = response.data.url;
         downloadLink.download = title; // Nome do arquivo de download
-
+        setLoading(false);
         // Simula um clique no link para iniciar o download
         downloadLink.click();
       })
@@ -42,7 +42,7 @@ const FileCard = ({ editable, title, id, icon, updateParent }) => {
 
     function compressDoc(e) {
       e.preventDefault();
-
+      setLoading(true);
       api.post("/transform/docx-to-pdf", {
         url: baseURL + "/files/" + title
       }).then(response => {
@@ -52,7 +52,7 @@ const FileCard = ({ editable, title, id, icon, updateParent }) => {
         downloadLink.setAttribute('download', title);
         downloadLink.href = response.data.url;
         downloadLink.download = title; // Nome do arquivo de download
-
+        setLoading(false);
         // Simula um clique no link para iniciar o download
         downloadLink.click();
       })

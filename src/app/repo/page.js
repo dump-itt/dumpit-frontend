@@ -228,7 +228,7 @@ export default function Repo() {
                     icon = faFileImage
                   }
 
-                  return (<FileCard editable={editable} key={file.id} id={file.id} icon={icon} title={file.name} updateParent={getRepositoryContent} />);
+                  return (<FileCard setLoading={setLoading} editable={editable} key={file.id} id={file.id} icon={icon} title={file.name} updateParent={getRepositoryContent} />);
                 })
               }
             </div>
